@@ -1,14 +1,31 @@
-const database = require("./database-connection");
+const knex = require("./database-connection");
 
 module.exports = {
-    list(){
+    list() {
+        return knex('coffeetable')
+            .select();
     },
-    read(id){
+    read(id) {
+        return knex('coffeetable')
+            .select()
+            .where('id', id)
+            .first();
     },
-    create(coffee){
+    create(resolution) {
+        return knex('coffeetable')
+            .insert(resolution)
+            .returning("*")
+            .then(record => record[0]);
     },
-    update(id, coffee){
+    update(id, resolution) {
+        return knex('coffeetable')
+            .update(resolution)
+            .where("id", id)
+            .returning("*")
+            .then(record => record[0]);
     },
-    delete(id){
+    delete(id) {
+        return knex('coffeetable').delete().where("id", id);
     }
+
 };
