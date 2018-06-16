@@ -19,8 +19,8 @@ module.exports = {
     },
     update(id, resolution) {
         return knex('coffeetable')
+            .where('id', id)
             .update(resolution)
-            .where("id", id)
             .returning("*")
             .then(record => record[0]);
     },
